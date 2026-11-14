@@ -1,7 +1,7 @@
 export type Point = { x: number; y: number };
 export type EnemyKind = 'mold' | 'goblin' | 'guard' | 'archer' | 'scribe' | 'boss';
 export type Status = { id: 'strength' | 'haste' | 'burn' | 'weaken' | 'stun'; remaining: number };
-export type Enemy = Point & { id: string; kind: EnemyKind; hp: number; maxHp: number; alert: boolean; statuses: Status[]; tell?: Point; cooldown: number; phase: number };
+export type Enemy = Point & { id: string; kind: EnemyKind; hp: number; maxHp: number; alert: boolean; statuses: Status[]; tell?: Point; windup?: number; aoeCooldown?: number; cooldown: number; phase: number };
 export type FeatureKind = 'chest' | 'key' | 'door' | 'runes' | 'bridgeSwitch' | 'bridge' | 'secret' | 'note' | 'exit' | 'back' | 'merchant' | 'antarion' | 'rune' | 'seal' | 'pillar' | 'spring';
 export type Feature = Point & { id: string; kind: FeatureKind; name: string; text?: string; items?: Record<string, number>; gold?: number; requires?: string; to?: number };
 export type Level = { id: number; name: string; subtitle: string; objective: string; tint: string; map: string[]; start: Point; arrival: Point; features: Feature[]; enemies: (Point & {kind: EnemyKind})[] };

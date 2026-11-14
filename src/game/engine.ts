@@ -1,3 +1,4 @@
+import { DIALOGS } from '../content/dialogs.ru';
 import { LEVELS, DIRS } from '../content/levels';
 import { ENEMIES, ITEMS, SPELLS, XP_THRESHOLDS, SHOP } from '../content/items';
 import { contextFeature, distance, features, lineOfSight, occupied, pathStep, reveal, solid, zoneState } from './grid';
@@ -35,12 +36,13 @@ function enemyTick(s:State):void {
   if(hasStatus(e.statuses,'burn')){e.hp=Math.max(0,e.hp-4);rewardKill(s,e);}
   const stunned=hasStatus(e.statuses,'stun');e.statuses=e.statuses.map(v=>({...v,remaining:v.remaining-1})).filter(v=>v.remaining>0);if(e.cooldown>0)e.cooldown--;
   if(e.hp<=0||stunned||s.mode!=='playing')continue;
-  const n=distance(e,p),los=lineOfSight(s,e,p);if(n<=6&&los)e.alert=true;if(!e.alert||n>12)continue;
+  const n=distance(e,p),los=lineOfSight(s,e,p);if(n<=6&&los){if(e.kind==='boss'&&!e.alert)for(const line of DIALOGS.boss)message(s,line);e.alert=true;}if(!e.alert||n>12)continue;
   if(e.kind==='guard'&&s.cycles%2===1)continue;
   if(e.kind==='boss'){
+   e.aoeCooldown=Math.max(0,(e.aoeCooldown??0)-1);
    if(e.hp<=e.maxHp/2&&e.phase===1){e.phase=2;message(s,'Регент раскалывается: ФАЗА II. Радиус печати вырос до 1 клетки.');}
-   if(e.tell){if(distance(p,e.tell)<=(e.phase===2?1:0))hurt(s,22,'Разлом Регента',true);else message(s,'Разлом ударил по пустому камню.');e.tell=undefined;continue;}
-   if(los&&n<=5&&s.cycles%3===0){e.tell={x:p.x,y:p.y};message(s,'Регент метит землю. На следующем ходу отойдите от красной печати!');continue;}
+   if(e.tell){if((e.windup??1)>1){e.windup!--;message(s,'Разлом расширяется. Ещё один ход, чтобы выйти за красное кольцо.');continue;}if(distance(p,e.tell)<=(e.phase===2?1:0))hurt(s,22,'Разлом Регента',true);else message(s,'Разлом ударил по пустому камню.');e.tell=undefined;e.aoeCooldown=4;continue;}
+   if(los&&n<=5&&s.cycles%3===0&&e.aoeCooldown===0){e.tell={x:p.x,y:p.y};e.windup=e.phase===2?2:1;message(s,'Регент метит землю. На следующем ходу отойдите от красной печати!');continue;}
   }
   if(e.kind==='archer'&&los&&n<=5){if(e.tell){hurt(s,ENEMIES[e.kind].attack,'Рунный выстрел');e.tell=undefined;}else{e.tell={x:p.x,y:p.y};message(s,'Стрелок целится. Укройтесь за углом или оглушите его.');}continue;}
   if(e.kind==='archer')e.tell=undefined;

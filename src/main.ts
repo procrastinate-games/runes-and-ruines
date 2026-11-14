@@ -14,7 +14,7 @@ try{view=new DungeonView(document.querySelector('#scene')!);}catch{app.innerHTML
 const ui=new UI(document.querySelector('#ui')!,settings,command);ui.hasSave=!!(load()??load(true));
 function applySettings(){sound.enabled=settings.sound;sound.volume=settings.volume;sound.update();view.setQuality(settings.low);view.setFast(settings.fast);}
 function refresh(snap=false){view.sync(state,snap);view.setOverlay(ui.panel==='start');ui.render(state);}
-function beginNew(){state=createGame(ui.difficulty);ui.panel='intro';sessionStarted=false;refresh(true);}
+function beginNew(){state=createGame(ui.difficulty);ui.panel='intro';sessionStarted=false;ui.sessionActive=false;refresh(true);}
 function command(a:UICommand){
  if(a.type==='panel'){
   if(state.mode!=='playing'&&a.panel!=='newConfirm')return;const previous=ui.panel;ui.panel=previous===a.panel?'':a.panel;
@@ -23,22 +23,22 @@ function command(a:UICommand){
  if(a.type==='difficulty'){ui.difficulty=ui.difficulty==='normal'?'story':'normal';ui.render(state);return;}
  if(a.type==='start'){if(ui.hasSave){ui.panel='newConfirm';ui.render(state);}else beginNew();return;}
  if(a.type==='new'){beginNew();return;}
- if(a.type==='begin'){sound.unlock();sessionStarted=true;ui.panel='';save(state,true);ui.hasSave=true;refresh(true);return;}
+ if(a.type==='begin'){sound.unlock();sessionStarted=true;ui.sessionActive=true;ui.panel='';save(state,true);ui.hasSave=true;refresh(true);return;}
  if(a.type==='continue'||a.type==='load'||a.type==='retry'){
-  const stored=a.type==='retry'?load(true):load()??load(true);if(stored){state=stored;sessionStarted=true;ui.panel='';sound.unlock();busyUntil=0;refresh(true);}else ui.notify('Сохранение отсутствует или повреждено. Начните новый путь.');return;
+  const stored=a.type==='retry'?load(true):load()??load(true);if(stored){state=stored;sessionStarted=true;ui.sessionActive=true;ui.panel='';sound.unlock();busyUntil=0;refresh(true);}else ui.notify('Сохранение отсутствует или повреждено. Начните новый путь.');return;
  }
  if(a.type==='save'){const ok=save(state);ui.hasSave=ok||ui.hasSave;ui.notify(ok?'Путь сохранён в ручной слот.':'Не удалось сохранить. Хранилище браузера недоступно.');return;}
  if(a.type==='setting'){if(a.setting==='sound')settings.sound=!settings.sound;if(a.setting==='low')settings.low=!settings.low;if(a.setting==='fast')settings.fast=!settings.fast;writeSettings(settings);applySettings();ui.render(state);return;}
  if(!sessionStarted||performance.now()<busyUntil||state.mode!=='playing')return;
  const allowedInPanel=['use','equip','buy','negotiate','interact'].includes(a.type);if(ui.panel&&!allowedInPanel)return;
- sound.unlock();const hp=state.player.hp,prevZone=state.zone;const result=act(state,a as Intent);
- if(result.costTurn)busyUntil=performance.now()+(settings.fast?45:150);
+ sound.unlock();const impact=target(state);const impactPoint=impact?{x:impact.x,y:impact.y}:undefined;const hp=state.player.hp,prevZone=state.zone;const result=act(state,a as Intent);
+ if(result.ok&&(result.costTurn||a.type==='turn'))busyUntil=performance.now()+(settings.fast?45:150);
  if(result.panel){ui.panel=result.panel;if(result.panel==='note')ui.note=result.message;}
  else if(a.type==='interact'&&['runes','seal'].includes(ui.panel))ui.panel='';
  if(state.zone!==prevZone)ui.panel='';
  if(result.checkpoint&&state.player.hp>0){save(state,true);ui.hasSave=true;}
  refresh();
- if(result.effect){view.effect(result.effect);sound.play(result.effect);const w=document.querySelector('#held-weapon');w?.classList.add(result.effect==='sword'||result.effect==='bolt'?'swing':'cast-fx');}
+ if(result.effect){view.effect(result.effect,impactPoint);sound.play(result.effect);const w=document.querySelector('#held-weapon');w?.classList.add(result.effect==='sword'||result.effect==='bolt'?'swing':'cast-fx');}
  else if(result.ok&&a.type==='move')sound.play('step');
  if(state.player.hp<hp){sound.play('hurt');document.querySelector('#hit-flash')?.classList.add('active');}
  if(result.damage){const el=document.createElement('div');el.className='damage-number';el.textContent=`−${result.damage}`;document.querySelector('#ui')?.append(el);setTimeout(()=>el.remove(),750);}
@@ -55,4 +55,4 @@ applySettings();refresh(true);
 const debug={get state(){return state;},get panel(){return ui.panel;},stats:()=>view.stats()};
 Object.assign(window,{__GAME__:debug,render_game_to_text:()=>JSON.stringify({coords:'origin top-left, x east, y south; facing 0=N 1=E 2=S 3=W',mode:ui.panel||state.mode,zone:LEVELS[state.zone].name,player:state.player,turns:state.turns,cycles:state.cycles,hasteQueue:state.hasteQueue,enemies:zoneState(state).enemies.filter(e=>e.hp>0),flags:state.flags,secrets:state.secrets,context:contextFeature(state)?.name,log:state.log.slice(-2)}),advanceTime:(ms:number)=>new Promise(resolve=>setTimeout(resolve,Math.max(0,ms)))});
 // Mutating QA hooks are compiled out of production.
-if(import.meta.env.DEV)Object.assign(window,{__QA__:{dispatch:command,replace:(s:State,panel:Panel='')=>{state=s;sessionStarted=true;ui.panel=panel;busyUntil=0;refresh(true);}}});
+if(import.meta.env.DEV)Object.assign(window,{__QA__:{dispatch:command,replace:(s:State,panel:Panel='')=>{state=s;sessionStarted=true;ui.sessionActive=true;ui.panel=panel;busyUntil=0;refresh(true);}}});

@@ -110,3 +110,9 @@ interface QuestFlags {
 ## Релиз
 
 Собрать `README.md` с кнопками/раскладкой, GIF/screenshots **собственной игры** (не оригинала), инструкцией `npm install && npm run dev`, корректным скриптом `npm run build`, атрибуцией реальных лицензий, описанием сохранений. Публикация в браузере. Не выдавать технический прототип за завершённый проект.
+
+## Implemented release notes
+
+The user-specified organization template overrides the generic GitHub Pages release suggestion above: the configured publisher is the unchanged shared GitHub Actions workflow. The exact repository and catalog slug is `runes-and-ruines`. Relative base './' still supports static subpath hosting. See platform-project-notes.md and README.md.
+
+Actual test stack: Vitest for the pure engine and authored campaign route validation; Playwright Chromium for browser regressions. Dev-only mutation hooks are compiled out of production. Runtime read-only inspection is retained. Static geometry and library decoration are batched with InstancedMesh; no postprocessing/shadows, DPR capped at 1.7 (1 in low mode). Synthesized audio is unlocked only by a user gesture.
