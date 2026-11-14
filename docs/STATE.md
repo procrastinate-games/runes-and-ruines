@@ -9,3 +9,8 @@ Verification and limitations: see QA.md. Engine and full route tests pass; full 
 The first playable commit 0797de3 was pushed as soon as available. Its shared publish workflow succeeded (run 43551209691), including live verification and portal refresh. Subsequent main pushes use the same unchanged workflow; current release outcome is visible at https://github.com/procrastinate-games/runes-and-ruines/actions . No token or private reference image is in the repository.
 
 Next step for independent player review: play the published normal campaign and assess pacing/difficulty on physical desktop/mobile hardware. Do not reopen scaffolding or reset shipped save keys. No implementation feature is deferred.
+
+
+## Russian editorial update
+
+The user requested a full Russian copy pass while keeping the opening dialogue exact. Player-facing item/spell names, descriptions, objectives, notes, dialogues, HUD/help, quest stages and runtime feedback were edited; see russian-editorial.md for the display glossary and scope. The turn engine, maps, content IDs, balance and save schema are preserved. English localization is not part of this existing-game editorial request. All 40 engine/campaign tests and six browser regressions pass; desktop/mobile copy screens were inspected with no horizontal overflow. Updates publish through the existing shared workflow.

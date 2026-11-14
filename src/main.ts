@@ -10,7 +10,7 @@ import { Sound } from './audio/effects';
 import { load, readSettings, save, writeSettings } from './save/storage';
 const app=document.querySelector<HTMLDivElement>('#app')!;app.innerHTML='<main id="scene" aria-label="Подземелья Астэрны — вид от первого лица"></main><div id="ui"></div>';
 let state=createGame(),busyUntil=0,sessionStarted=false;const settings=readSettings(),sound=new Sound();let view:DungeonView;
-try{view=new DungeonView(document.querySelector('#scene')!);}catch{app.innerHTML='<div class="fatal"><h1>Астэрне нужен WebGL</h1><p>Включите аппаратное ускорение или откройте игру в современном Chrome / Firefox. Сохранения останутся в браузере.</p></div>';throw new Error('WebGL initialization failed');}
+try{view=new DungeonView(document.querySelector('#scene')!);}catch{app.innerHTML='<div class="fatal"><h1>Не удалось запустить игру</h1><p>Для игры нужен WebGL. Включите аппаратное ускорение или откройте игру в актуальном Chrome / Firefox. Ваши сохранения останутся в браузере.</p></div>';throw new Error('WebGL initialization failed');}
 const ui=new UI(document.querySelector('#ui')!,settings,command);ui.hasSave=!!(load()??load(true));
 function applySettings(){sound.enabled=settings.sound;sound.volume=settings.volume;sound.update();view.setQuality(settings.low);view.setFast(settings.fast);}
 function refresh(snap=false){view.sync(state,snap);view.setOverlay(ui.panel==='start');ui.render(state);}
@@ -25,9 +25,9 @@ function command(a:UICommand){
  if(a.type==='new'){beginNew();return;}
  if(a.type==='begin'){sound.unlock();sessionStarted=true;ui.sessionActive=true;ui.panel='';save(state,true);ui.hasSave=true;refresh(true);return;}
  if(a.type==='continue'||a.type==='load'||a.type==='retry'){
-  const stored=a.type==='retry'?load(true):load()??load(true);if(stored){state=stored;sessionStarted=true;ui.sessionActive=true;ui.panel='';sound.unlock();busyUntil=0;refresh(true);}else ui.notify('Сохранение отсутствует или повреждено. Начните новый путь.');return;
+  const stored=a.type==='retry'?load(true):load()??load(true);if(stored){state=stored;sessionStarted=true;ui.sessionActive=true;ui.panel='';sound.unlock();busyUntil=0;refresh(true);}else ui.notify('Не удалось загрузить сохранение: оно отсутствует или повреждено. Можно начать новую игру.');return;
  }
- if(a.type==='save'){const ok=save(state);ui.hasSave=ok||ui.hasSave;ui.notify(ok?'Путь сохранён в ручной слот.':'Не удалось сохранить. Хранилище браузера недоступно.');return;}
+ if(a.type==='save'){const ok=save(state);ui.hasSave=ok||ui.hasSave;ui.notify(ok?'Игра сохранена.':'Не удалось сохранить игру. Хранилище браузера недоступно или заполнено.');return;}
  if(a.type==='setting'){if(a.setting==='sound')settings.sound=!settings.sound;if(a.setting==='low')settings.low=!settings.low;if(a.setting==='fast')settings.fast=!settings.fast;writeSettings(settings);applySettings();ui.render(state);return;}
  if(!sessionStarted||performance.now()<busyUntil||state.mode!=='playing')return;
  const allowedInPanel=['use','equip','buy','negotiate','interact'].includes(a.type);if(ui.panel&&!allowedInPanel)return;

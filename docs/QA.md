@@ -11,7 +11,7 @@ Both full route tests use the normal difficulty, only earned loot, ordinary heal
 | All secrets, rune found before Antarion | 266 | 265 | 21 | 3/3 | 4 | Victory |
 | Mandatory route, no rune or secret reward | 218 | 217 | 20 | 0/3 | 4 | Victory |
 
-The all-secrets route was also replayed as 328 real commands through the browser action controller. It reached victory with no browser errors and matched the engine's turns, cycles, kills, seed, secrets, flags, inventory, equipment, HP, focus and purchase state. No campaign state was replaced in that replay. The extra action is the intentionally free level transition.
+The all-secrets route was also replayed as 328 real commands through the browser action controller. It reached victory with no browser errors and matched the engine's turns, cycles, kills, seed, secrets, flags, inventory, equipment, HP, focus and purchase state. No campaign state was replaced in that replay. The final victorious attack has no enemy response, accounting for the one-cycle difference.
 
 ## Browser regressions
 
@@ -30,3 +30,12 @@ The organization's shared workflow successfully tested, built, smoke-tested, pub
 ## Human verification still open
 
 The intended 30–60 minute first-play pacing, subjective balance, sound comfort and frame rate on physical Android/iOS hardware need independent human playtesting. Browser device emulation and a headless software renderer verify behavior/layout, not real mobile GPU performance. No user playtest is claimed.
+
+
+## Russian editorial update
+
+All runtime Russian text was reviewed in coherent groups (content, dialogue, quests, UI, messages). The four-line opening matches the approved version byte for byte. Spell/resource terminology is recorded in russian-editorial.md; deliberate dry humor, boss speech and established proper names are retained. Numerical cases for 0, 1, 2, 5, 11, 21, 22 and 111 bolts were checked.
+
+The existing 40 engine/route tests pass with unchanged route outcomes (266 turns with all secrets; 218 without). Six browser regressions pass with the renamed visible labels. `scripts/review-russian.mjs` additionally inspected inventory, journal, help, shop, bridge and Antarion panels at desktop and 844×390 / 640×360, confirming no horizontal page/panel overflow or browser errors. The longer help remains scrollable and its 44px close button is visible when opened normally on a 640×360 screen. No independent human/native-speaker review is claimed.
+
+A focused 640×360 check caught an overlong Archive objective after the Antarion meeting. It was shortened without changing the task, and a clipping assertion was added to the existing mobile regression. HUD and journal objectives were checked for consistency at the completed-puzzle, acquired-key, met-Antarion and opened-seal stages.

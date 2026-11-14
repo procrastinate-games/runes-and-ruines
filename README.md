@@ -36,7 +36,7 @@ npm run test:browser     # actual desktop/touch browser regressions
 | Interact with the object ahead / underfoot | F |
 | Wait, restoring focus | R |
 | Best owned sword / crossbow | 1 / 2 |
-| Spark / Fire Seal / Echo | 3 / 4 / 5 |
+| Spark / Fire Seal / Shockwave | 3 / 4 / 5 |
 | Small healing potion | H |
 | Inventory / map / journal | Tab / M / J |
 | Pause or close a panel | Esc |
@@ -73,7 +73,7 @@ src/
   game/                  # pure deterministic turns, collision, LOS, BFS, combat, AI, quests
     types.ts engine.ts grid.ts rng.ts
   content/               # maps, encounters, items, balance and Russian dialogue
-    levels.ts items.ts dialogs.ru.ts
+    levels.ts items.ts dialogs.ru.ts russian.ts
   render/                # Three.js view and original Canvas art
     scene.ts art.ts
   ui/                    # HUD, screens, touch controls and original SVG icons
@@ -111,3 +111,5 @@ Vite uses `base: './'`. `dist/` is a standalone static build and supports a subp
 ## Art and attribution
 
 See [CREDITS.md](CREDITS.md). All shipped artwork, maps, dialogue and sounds are original. The private reference photograph and historical game screenshots are **not** included in this repository or production assets.
+
+Russian wording was edited after player feedback; the original opening is unchanged. See [the editorial glossary and review scope](docs/russian-editorial.md). Internal IDs and existing saves remain compatible.
