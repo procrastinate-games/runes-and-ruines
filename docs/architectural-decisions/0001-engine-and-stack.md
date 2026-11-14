@@ -1,0 +1,4 @@
+# ADR 0001: deterministic TypeScript RPG with Three.js view
+Accepted 2026-11-14 from the supplied agent pack and explicit autonomous implementation request.
+Use TypeScript strict, Vite, Three.js WebGL, authored grid maps, a pure deterministic action engine and versioned localStorage. Russian interface; original procedural art and independently drawn Georges portrait inspired by the private reference. No photo or historical screenshots in source/runtime. Desktop keyboard and mobile landscape touch controls. Three authored levels, five enemy types and two-phase boss, short story and single optional rune quest. No server, payments or multiplayer. Publish through unchanged organization workflow, with Vite base './'.
+The supplied scope and autonomous instruction override skill confirmation gates and one-feature session limits. Game-specific separation in the supplied technical brief takes priority over generic Three.js skill directory names.

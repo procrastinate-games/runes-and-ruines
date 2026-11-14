@@ -1,0 +1,12 @@
+export type Point = { x: number; y: number };
+export type EnemyKind = 'mold' | 'goblin' | 'guard' | 'archer' | 'scribe' | 'boss';
+export type Status = { id: 'strength' | 'haste' | 'burn' | 'weaken' | 'stun'; remaining: number };
+export type Enemy = Point & { id: string; kind: EnemyKind; hp: number; maxHp: number; alert: boolean; statuses: Status[]; tell?: Point; cooldown: number; phase: number };
+export type FeatureKind = 'chest' | 'key' | 'door' | 'runes' | 'bridgeSwitch' | 'bridge' | 'secret' | 'note' | 'exit' | 'back' | 'merchant' | 'antarion' | 'rune' | 'seal' | 'pillar' | 'spring';
+export type Feature = Point & { id: string; kind: FeatureKind; name: string; text?: string; items?: Record<string, number>; gold?: number; requires?: string; to?: number };
+export type Level = { id: number; name: string; subtitle: string; objective: string; tint: string; map: string[]; start: Point; arrival: Point; features: Feature[]; enemies: (Point & {kind: EnemyKind})[] };
+export type ZoneState = { enemies: Enemy[]; opened: string[]; known: string[]; visited: string[]; runeInput: number[]; bridge: number };
+export type Player = Point & { id: 'georges_feanor_tikho'; name: string; facing: number; hp: number; maxHp: number; focus: number; maxFocus: number; armor: number; level: number; xp: number; gold: number; inventory: Record<string, number>; equipped: string; statuses: Status[] };
+export type State = { version: 1; seed: number; zone: number; zones: ZoneState[]; player: Player; flags: Record<string, boolean>; turns: number; cycles: number; hasteQueue: number; kills: number; secrets: string[]; notes: string[]; mode: 'playing' | 'defeat' | 'victory'; difficulty: 'normal' | 'story'; log: string[]; purchases: Record<string, number>; played: number };
+export type Intent = { type: 'move'; relative: number } | {type: 'turn'; delta: number} | {type:'attack'} | {type:'cast'; spell: string} | {type:'use'; item:string} | {type:'interact'; choice?: number | string} | {type:'wait'} | {type:'equip'; item:string} | {type:'buy'; item:string} | {type:'negotiate'; choice:number};
+export type Result = { ok: boolean; costTurn: boolean; message: string; effect?: string; panel?: 'shop' | 'antarion' | 'runes' | 'seal' | 'bridge' | 'note'; checkpoint?: boolean; damage?:number };

@@ -22,3 +22,6 @@
 - Commit author and committer: `kifrip <25287470+kifrip@users.noreply.github.com>`.
 
 <!-- platform:end -->
+
+## Runes & Ruins
+Read docs/STATE.md, docs/gameplan.md, docs/tech.md, docs/story.md and ADR-0001. The supplied agent pack defines scope. Keep pure rules in src/game, authored data in src/content, Three.js view in src/render, UI/audio/save separate. New localStorage keys use pg:runes-and-ruines:. No private source photo or historical screenshots may be published. Use make-game for iteration, preserving the platform publishing block above.

@@ -1,28 +1,20 @@
 {
-  "schemaVersion": 1,
-  "slug": "game-template",
-  "status": "draft",
-  "title": "Your game title",
-  "shortDescription": "A short invitation to play.",
-  "description": "Describe the player, goal, and main challenge in two or three sentences.",
-  "primaryCategory": "Casual",
-  "categories": [
-    "Casual"
-  ],
-  "dimension": "2D",
-  "controls": [
-    "Describe keyboard controls.",
-    "Describe touch controls."
-  ],
-  "languages": "English",
-  "saveNote": "Describe what is saved locally.",
-  "coverAlt": "Describe the game cover.",
-  "accent": "lime",
-  "startQuery": "",
-  "featured": false,
-  "showSource": false,
-  "supportedDevices": [
-    "desktop",
-    "mobile"
-  ]
+ "schemaVersion":1,
+ "slug":"runes-and-ruines",
+ "status":"published",
+ "title":"Runes & Ruins",
+ "shortDescription":"Keep your name. Break the seal. Explore a fortress that is forgetting itself.",
+ "description":"Enter Asterna as the dry-witted elven adventurer Georges in an original first-person, turn-based dungeon RPG. Explore three connected depths, exploit enemy weaknesses, solve rune and bridge puzzles, trade with Bessa, and meet the Keeper of Forgotten Truths before facing the Nameless Regent. Every action matters, but the world waits for you.",
+ "primaryCategory":"RPG",
+ "categories":["RPG","Adventure","Strategy"],
+ "dimension":"3D",
+ "controls":["WASD / Up and Down: grid movement; Q/E: rotate; Space: attack; F: interact; R: wait.","1/2: sword or crossbow; 3/4/5: spells; H: heal; Tab: inventory; M: map; J: journal; Esc: pause.","Mobile landscape: tap the direction and rotation pad, attack/action buttons, spell slots and potion. Portrait displays a rotate-device prompt."],
+ "languages":"Russian",
+ "saveNote":"Versioned local browser saves. Separate manual save and milestone checkpoints preserve equipment, enemies, maps, purchases, quests and campaign progress.",
+ "coverAlt":"An amber-lit stone passage of Asterna with a runic enemy and the title Runes & Ruins.",
+ "accent":"coral",
+ "startQuery":"",
+ "featured":false,
+ "showSource":true,
+ "supportedDevices":["desktop","mobile"]
 }
