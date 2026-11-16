@@ -1,0 +1,22 @@
+{
+  "schema": "game-ai-usage/report@2",
+  "report_id": "557f4335-9e71-4f17-9cc6-59680ef7fb21",
+  "repo": "procrastinate-games/runes-and-ruines",
+  "date": "2026-11-16",
+  "accuracy": "unknown",
+  "models": [
+    {
+      "provider": "openai",
+      "model": null,
+      "price_tier": null,
+      "calls": null,
+      "input_tokens": null,
+      "output_tokens": null,
+      "reasoning_tokens": null,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "cache_write_5m_tokens": null,
+      "cache_write_1h_tokens": null
+    }
+  ]
+}
