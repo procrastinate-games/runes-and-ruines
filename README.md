@@ -113,3 +113,7 @@ Vite uses `base: './'`. `dist/` is a standalone static build and supports a subp
 See [CREDITS.md](CREDITS.md). All shipped artwork, maps, dialogue and sounds are original. The private reference photograph and historical game screenshots are **not** included in this repository or production assets.
 
 Russian wording was edited after player feedback; the original opening is unchanged. See [the editorial glossary and review scope](docs/russian-editorial.md). Internal IDs and existing saves remain compatible.
+
+## Play more browser games
+
+Find this game and the rest of the collection at [Games to Procrastinate To](https://procrastinate.games/).
